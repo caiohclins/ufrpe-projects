@@ -25,7 +25,7 @@ Projeto designado a primeira VA da disciplina de Estatística Exploratória I (2
 * Agrupe os dados por praia (group_by).
 
 ## Questão 1:
-Encontre média, desvio-padrão, mediana, Q1, Q3, mínimo e máximo dos enterococos de cada praia (summarise)
+* Encontre média, desvio-padrão, mediana, Q1, Q3, mínimo e máximo dos enterococos de cada praia (summarise)
 
 ## Questão 2:
 * Faça um gráfico de barras com a variável Beach, ordenando da praia com maior quantidades de amostras para a menor.
