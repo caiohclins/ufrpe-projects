@@ -1,0 +1,90 @@
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(scales)
+
+# Lê os arquivos da planilha
+sp_beaches <- read_excel("vscode-workspace/Estudos/ufrpe/ufrpe-projects/ESTATISTICA_EXPLORATORIA_I-2022.1/projeto-primeira-va/sp_beaches.xlsx", sheet = 1, col_names = TRUE)
+
+# Cidade a mim atribuida para a elaboração do projeto
+my_city_is <- "ITANHAÉM"
+
+# Filtra os dados da cidade a mim atribuida para análise,
+# converte os dados da coluna "Enterococcus" para número
+# e agrupa os dados por praia.
+my_data <- sp_beaches %>% filter(City==my_city_is) %>%
+            mutate_at(c('Enterococcus'), as.numeric) %>%
+               group_by(Beach)
+
+# Visualização dos dados filtrados e agrupados
+View(my_data)
+
+# Encontra os valores média, desvio-padrão, mediana, Q1, Q3,
+# mínimo e máximo dos Enterococcus de cada praia
+dados_estatisticos <- summarise(my_data, media = mean(Enterococcus), # Encontra a média
+                                desvio_padrao = sd(Enterococcus), # Encontra o desvio padrão
+                                mediana = median(Enterococcus), # Encontra a mediana
+                                Q1 = quantile(Enterococcus, 0.25), # Encontra o 1° quartil
+                                Q3 = quantile(Enterococcus, 0.75), # Encontra o 3° quartil
+                                minimo = min(Enterococcus), # Encontra o mínimo
+                                maximo = max(Enterococcus), # Encontra o máximo
+                                amostras = n()) # Encontra a quantidade de amostras
+
+# Visualização dos dados estatísticos obtidos
+View(dados_estatisticos)
+
+
+# Gráfico de Barras de amostras por praia
+grafico_barras <- ggplot(dados_estatisticos, aes(x = reorder(Beach, -amostras), y = amostras, fill = Beach)) +
+                    geom_bar(stat = "identity", width = 0.5, position = "dodge") + 
+                    geom_text(aes(y = amostras, label = paste0(round(amostras / sum(amostras) * 100, 1), "%")),
+                              data = dados_estatisticos, 
+                              col = "#619CFF", vjust = -0.5) +
+                    labs(title = "Gráfico de máximos por praia",
+                         subtitle = "Fonte: Base de Dados Disponibiizada pelo professor") +
+                    xlab("Beach") +
+                    ylab("Maximo") +
+                    theme_minimal()
+
+# Visualização do gráfico de barras
+Plot(grafico_barras)
+
+#Gráfico de Pizza de amostras por praia
+grafico_pizza <- ggplot(dados_estatisticos, aes(x = "", y = amostras, fill = Beach)) +
+                    geom_bar(width = 1, stat = "identity") + 
+                    coord_polar("y", start = 0, direction = -1) + 
+                    geom_text(data = dados_estatisticos, 
+                              aes(x ="", y=amostras, label = paste0(round(amostras / sum(amostras) * 100, 1), "%")),
+                              position = position_stack(vjust = 0.5), size = 2) +
+                    labs(title = "Gráfico de máximos por praia",
+                         subtitle = "Fonte: Base de Dados Disponibiizada pelo professor")
+                  theme_minimal()
+                  
+# Visualização do gráfico de pizza
+Plot(grafico_pizza)
+
+# Histograma de Enterococcus por praia
+histograma_enterococcus <- ggplot(my_data, aes(x = Enterococcus)) +
+                              geom_histogram(fill='blue', color ='black') +
+                              xlab("Beach") +
+                              ylab("Enterococcus") +
+                              labs(title = "Histograma de Enterococcus por praia",
+                                   subtitle = "Fonte: Base de Dados Disponibiizada pelo professor") +
+                              theme_minimal()
+
+
+# Visualização do histograma
+Plot(histograma_enterococcus)
+
+
+# Box Plot de Enterococcus por praia
+boxplot_enterococcus <- ggplot(my_data, aes(x = Beach, y = Enterococcus), fill = Beach) +
+                            geom_boxplot(color = "black", fill = "blue") +
+                            xlab("Beach") +
+                            ylab("Valores") +
+                            labs(title = "Box Plot de Enterococcus por praia",
+                                 subtitle = "Fonte: Base de Dados Disponibiizada pelo professor") +
+                            theme_minimal()
+
+# Visualização do boxplot
+Plot(boxplot_enterococcus)

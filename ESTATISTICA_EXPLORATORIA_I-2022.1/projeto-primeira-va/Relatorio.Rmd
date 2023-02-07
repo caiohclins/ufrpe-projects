@@ -1,0 +1,57 @@
+---
+title: "Relatório do Projeto - Estatística Exploratória 2022.1"
+author: "Caio Lins"
+date: "2023-02-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Dados do Projeto
+
+Planilha utilizada como base de dados:
+
+```{r sp_beaches}
+print(sp_beaches, type="latex", comment=FALSE)
+```
+
+Dados filtrados pela cidade a mim atribuida, agrupados por praia e dados da coluna Enterococus convertidos para o tipo numérico:
+
+```{r my_data}
+print(my_data, type="latex", comment=FALSE)
+```
+
+Dados estatísticos obtidos para o estudo: (média, desvio-padrão, mediana, Q1, Q3, mínimo e máximo. Além de um contador de ocorrências para descobrir a quantidade de amostras de cada praia)
+
+```{r dados_estatisticos}
+print(dados_estatisticos, type="latex", comment=FALSE)
+```
+
+## Graficos do Projeto
+
+Gráfico de Barras de amostras por praia:
+
+```{r pressure, echo=FALSE}
+plot(grafico_barra)
+```
+
+Gráfico de Pizza de amostras por praia:
+
+```{r pressure, echo=FALSE}
+plot(grafico_pizza)
+```
+
+Histograma de Enterococcus por praia:
+
+```{r pressure, echo=FALSE}
+plot(histograma_enterococcus)
+```
+
+Box Plot de Enterococcus por praia:\
+(**OBS: Achei o gráfico muito estranho, tentei corrigir de várias formas mas sem sucesso. Gostaria de uma correção do projeto e dicas durante a aula.**)
+
+```{r pressure, echo=FALSE}
+plot(boxplot_enterococcus)
+```
