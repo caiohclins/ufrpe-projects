@@ -1,6 +1,6 @@
-# Análise estatística da qualidade da água das praias de SP
+# Criação de Dashboard utilizando a biblioteca SHINY
 
-Projeto designado a primeira VA da disciplina de Estatística Exploratória I (2022.1), do curso de Licenciatura em Computação pela UFRPE.
+Projeto designado a segunda VA da disciplina de Estatística Exploratória I (2022.1), do curso de Licenciatura em Computação pela UFRPE.
 
 ## Configurando o Ambiente da Aplicação [Windows]
 
